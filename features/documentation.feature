@@ -15,7 +15,6 @@ Feature: Documentation formatter support
     """
 
   Scenario: Displaying reason for an "it" block
-  Scenario: More complex matchers with a reason
     Given a file named "spec/simple_spec.rb" with:
     """
     require "spec_helper"
@@ -39,3 +38,27 @@ Feature: Documentation formatter support
       should support concatenation
       -> because NaturalLanguageProcessor uses this in its .greeting_generator method
     """
+
+  Scenario: Display normal output if no because
+    Given a file named "spec/simple_spec.rb" with:
+    """
+    require "spec_helper"
+
+    describe String do
+      subject { "a simple string" }
+      let(:welcome_message) { "Hello" }
+      let(:name) { "Steve Yadlowsky" }
+
+      it "should support concatenation" do
+        greeting = welcome_message + ", " + name
+        greeting.should == "Hello, Steve Yadlowsky"
+      end
+    end
+    """
+    When I run `rspec spec --format documentation`
+    Then it should pass with:
+    """
+    String
+      should support concatenation
+    """
+

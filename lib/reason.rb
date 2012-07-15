@@ -21,7 +21,11 @@ module Reason
     def self.print_for(example, options={})
       depth = options[:depth] || 0
       indentation = "  " * depth
-      "#{indentation}-> because #{explanations[example].join("\n#{indentation}->")}"
+      if explanations[example]
+        "#{indentation}-> because #{explanations[example].join("\n#{indentation}->")}"
+      else
+        ""
+      end
     end
   end
 end
